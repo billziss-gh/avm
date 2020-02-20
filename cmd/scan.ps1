@@ -50,6 +50,7 @@ foreach ($ScanPath in $args) {
 
     if ($TempName) {
         Remove-Item $TempName
+        $TempName = $null
     }
 }
 

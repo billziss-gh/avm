@@ -15,7 +15,9 @@ function AvScan-WindowsDefender {
 
     $ScanOut = & $AvProg -Scan -ScanType 3 -File $ScanPath -DisableRemediation
     if ($LASTEXITCODE -ne 0) {
-        Write-ScanOutput "SCAN: MpCmdRun.exe -Scan -ScanType 3 -File `"$(Split-Path $ScanPath -Leaf)`" -DisableRemediation`n"
+        $ThreatDefinitionVersion = (Get-MpComputerStatus).AntispywareSignatureVersion
+        Write-ScanOutput "SCAN: MpCmdRun.exe -Scan -ScanType 3 -File `"$(Split-Path $ScanPath -Leaf)`" -DisableRemediation"
+        Write-ScanOutput "Threat Definition Version: $ThreatDefinitionVersion`n"
         Write-ScanOutput $ScanOut
     }
 }
