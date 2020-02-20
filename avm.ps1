@@ -1,4 +1,5 @@
-# avm.ps1 - AntiVirus Monitor
+# avm.ps1
+# AntiVirus Monitor
 #
 # Copyright 2020 Bill Zissimopoulos
 
