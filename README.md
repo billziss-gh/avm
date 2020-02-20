@@ -1,6 +1,6 @@
 # avm - AntiVirus Monitor
 
-The goal of the AntiVirus Monitor project is to combat AntiVirus false positives. AntiVirus Monitor runs daily and scans a number of binaries using AntiVirus products. If an AntiVirus products reports a malware detection, then the detection is logged and the AntiVirus vendor can be contacted about a potential false positive.
+The goal of the AntiVirus Monitor project is to combat AntiVirus false positives. AntiVirus Monitor runs daily and scans a number of binaries using AntiVirus products. If an AntiVirus product reports a malware detection, then the detection is logged and the AntiVirus vendor can be contacted about a potential false positive.
 
 ## How it works
 
