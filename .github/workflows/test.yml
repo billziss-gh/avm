@@ -8,6 +8,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - shell: powershell -File {0}
     - run: |
         .\avm.ps1 scan `
           https://github.com/InQuest/malware-samples/raw/master/2018-05-Agent-Tesla-Open-Directory/agent-tesla/0abb52b3e0c08d5e3713747746b019692a05c5ab8783fd99b1300f11ea59b1c9
