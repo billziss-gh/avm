@@ -35,6 +35,13 @@ $ReportPath = Get-Date -Format FileDateTimeUniversal
 $Threats = 0
 
 foreach ($ScanPath in $args) {
+    if ($ScanPath.StartsWith('http:',  'InvariantCultureIgnoreCase') -or
+        $ScanPath.StartsWith('https:', 'InvariantCultureIgnoreCase')) {
+        $TempName = [System.IO.Path]::GetTempFileName()
+        Invoke-WebRequest -Uri $ScanPath -OutFile $TempName
+        $ScanPath = $TempName
+    }
+
     if (-not (Test-Path $ScanPath)) {
         [Console]::Error.WriteLine("file '$ScanPath' not found")
     } else {
@@ -44,6 +51,10 @@ foreach ($ScanPath in $args) {
             Write-Output $ScanOut
             $Threats++
         }
+    }
+
+    if ($TempName) {
+        Remove-Item $TempName
     }
 }
 
