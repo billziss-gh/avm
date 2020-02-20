@@ -1,11 +1,14 @@
 name: avm
 
-on: [repository_dispatch]
+on:
+  watch:
+    types: [started]
   #schedule:
   #  - cron: '0 14,20 * * *'
 
 jobs:
   scan:
+    if: github.actor == github.event.repository.owner.login
 
     runs-on: [windows-latest]
 
