@@ -2,18 +2,19 @@
 #
 # Copyright 2020 Bill Zissimopoulos
 
-$AvRoot = Join-Path $PSScriptRoot ".."
-$AvRoot = Join-Path $AvRoot "av"
-$AvList = (Get-ChildItem $AvRoot -Filter "*.ps1").BaseName
-$AvList |
-    foreach { . (Join-Path $AvRoot "$_.ps1") }
+param (
+    [string]$OutputPath,
+    [Parameter(Position=0, ValueFromRemainingArguments)][string[]]$args
+)
 
 function Write-ScanOutput {
-    $Scanner = (Get-PSCallStack)[1].Command
-    if ($Scanner.StartsWith('AvScan-')) {
-        $Scanner = $Scanner.Remove(0, 'AvScan-'.Length)
+    if ($OutputPath) {
+        $Scanner = (Get-PSCallStack)[1].Command
+        if ($Scanner.StartsWith('AvScan-')) {
+            $Scanner = $Scanner.Remove(0, 'AvScan-'.Length)
+        }
+        Write-Output $args >> ($OutputPath + '-' + $Scanner + '.txt')
     }
-    Write-Output $args >> ($ReportPath + '-' + $Scanner + '.txt')
     Write-Output $args
 }
 
@@ -26,9 +27,17 @@ function Scan {
         foreach { & "AvScan-$_" $ScanPath }
 }
 
-$ReportPath = Get-Date -Format FileDateTimeUniversal
-$Threats = 0
+$AvRoot = Join-Path $PSScriptRoot ".."
+$AvRoot = Join-Path $AvRoot "av"
+$AvList = (Get-ChildItem $AvRoot -Filter "*.ps1").BaseName
+$AvList |
+    foreach { . (Join-Path $AvRoot "$_.ps1") }
 
+if ($OutputPath) {
+    $OutputPath = Join-Path $OutputPath (Get-Date -Format FileDateTimeUniversal)
+}
+
+$Threats = 0
 foreach ($ScanPath in $args) {
     if ($ScanPath.StartsWith('http:',  'InvariantCultureIgnoreCase') -or
         $ScanPath.StartsWith('https:', 'InvariantCultureIgnoreCase')) {
