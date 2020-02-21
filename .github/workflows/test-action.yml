@@ -10,4 +10,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./
       with:
-        files: https://github.com/InQuest/malware-samples/raw/master/2018-05-Agent-Tesla-Open-Directory/agent-tesla/0abb52b3e0c08d5e3713747746b019692a05c5ab8783fd99b1300f11ea59b1c9
+        files: |
+            https://github.com/billziss-gh/winfsp/releases/download/v1.6/winfsp-1.6.20027.msi `
+            https://github.com/billziss-gh/winfsp/releases/download/v1.7B1/winfsp-1.7.20038.msi
