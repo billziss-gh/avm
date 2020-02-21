@@ -12,9 +12,8 @@ async function run()
 {
     try
     {
-        console.log("__dirname = ${__dirname}");
         const files = core.getInput('files', {required: true});
-        const args = ["-File", __dirname + "\..\avm.ps1", "scan"].concat(files.split(/\r?\n/));
+        const args = ["-File", __dirname + "\\..\\avm.ps1", "scan"].concat(files.split(/\r?\n/));
         await exec.exec("powershell.exe", args);
     }
     catch (error)
