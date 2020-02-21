@@ -23,12 +23,7 @@ function AvVersion {
         foreach { & "AvVersion-$_" }
 }
 
-function AvScan {
-    param (
-        $ScanPath,
-        $DisplayName
-    )
-
+function AvScan ($ScanPath, $DisplayName) {
     $AvList |
         foreach { & "AvScan-$_" $ScanPath $DisplayName }
 }

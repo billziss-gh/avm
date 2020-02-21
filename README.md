@@ -22,12 +22,7 @@ function AvVersion-WindowsDefender {
 
 **`AvScan-PRODUCT`**:
 ```powershell
-function AvScan-WindowsDefender {
-    param (
-        $ScanPath,
-        $DisplayName
-    )
-
+function AvScan-WindowsDefender ($ScanPath, $DisplayName) {
     $AvRoot = Get-ItemPropertyValue -Path 'HKLM:\SOFTWARE\Microsoft\Windows Defender' -Name InstallLocation
     $AvProg = Join-Path $AvRoot 'MpCmdRun.exe'
     if (-not (Test-Path $AvProg)) {
