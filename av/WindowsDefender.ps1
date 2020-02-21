@@ -4,7 +4,7 @@
 
 function AvVersion-WindowsDefender {
     $ThreatDefinitionVersion = (Get-MpComputerStatus).AntispywareSignatureVersion
-    "SCANNER: WindowsDefender $ThreatDefinitionVersion"
+    "VERS: WindowsDefender $ThreatDefinitionVersion"
 }
 
 function AvScan-WindowsDefender ($ScanPath, $DisplayName) {
@@ -17,8 +17,8 @@ function AvScan-WindowsDefender ($ScanPath, $DisplayName) {
     $ScanOut = & $AvProg -Scan -ScanType 3 -File $ScanPath -DisableRemediation
     if ($LASTEXITCODE -ne 0) {
         $ThreatDefinitionVersion = (Get-MpComputerStatus).AntispywareSignatureVersion
-        Write-ScanOutput "SCANNER: WindowsDefender $ThreatDefinitionVersion"
-        Write-ScanOutput "COMMAND: MpCmdRun.exe -Scan -ScanType 3 -File `"$DisplayName`" -DisableRemediation`n"
+        Write-ScanOutput "SCAN: WindowsDefender $ThreatDefinitionVersion"
+        Write-ScanOutput "FILE: $DisplayName`n"
         Write-ScanOutput $ScanOut
     }
 }
