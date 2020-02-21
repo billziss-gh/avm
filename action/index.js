@@ -1,5 +1,5 @@
 /*
- * action.js
+ * action/index.js
  * avm github action
  *
  * Copyright 2020 Bill Zissimopoulos

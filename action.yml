@@ -5,4 +5,4 @@ inputs:
     description: list of files to scan (newline separated)
 runs:
   using: node12
-  main: action-dist.js
+  main: action/index.dist.js
