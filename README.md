@@ -15,12 +15,21 @@ To add support for a new AntiVirus product `Product` a file named `Product.ps1` 
 ```powershell
 function AvScan-WindowsDefender {
     param (
-        $ScanPath
+        $ScanPath,
+        $DisplayName
     )
 
-    $ScanOut = & 'C:\Program Files\Windows Defender\MpCmdRun.exe' -Scan -ScanType 3 -File $ScanPath -DisableRemediation
+    $AvRoot = Get-ItemPropertyValue -Path 'HKLM:\SOFTWARE\Microsoft\Windows Defender' -Name InstallLocation
+    $AvProg = Join-Path $AvRoot 'MpCmdRun.exe'
+    if (-not (Test-Path $AvProg)) {
+        $AvProg = 'C:\Program Files\Windows Defender\MpCmdRun.exe'
+    }
+
+    $ScanOut = & $AvProg -Scan -ScanType 3 -File $ScanPath -DisableRemediation
     if ($LASTEXITCODE -ne 0) {
-        Write-ScanOutput "SCAN: MpCmdRun.exe -Scan -ScanType 3 -File `"$(Split-Path $ScanPath -Leaf)`" -DisableRemediation`n"
+        $ThreatDefinitionVersion = (Get-MpComputerStatus).AntispywareSignatureVersion
+        Write-ScanOutput "SCAN: MpCmdRun.exe -Scan -ScanType 3 -File `"$DisplayName`" -DisableRemediation"
+        Write-ScanOutput "Threat Definition Version: $ThreatDefinitionVersion`n"
         Write-ScanOutput $ScanOut
     }
 }

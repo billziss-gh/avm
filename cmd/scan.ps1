@@ -20,11 +20,12 @@ function Write-ScanOutput {
 
 function Scan {
     param (
-        $ScanPath
+        $ScanPath,
+        $DisplayName
     )
 
     $AvList |
-        foreach { & "AvScan-$_" $ScanPath }
+        foreach { & "AvScan-$_" $ScanPath $DisplayName }
 }
 
 $AvRoot = Join-Path $PSScriptRoot ".."
@@ -39,6 +40,9 @@ if ($OutputPath) {
 
 $Threats = 0
 foreach ($ScanPath in $args) {
+    $DisplayName = Split-Path $ScanPath -Leaf
+    $TempName = $null
+
     if ($ScanPath.StartsWith('http:',  'InvariantCultureIgnoreCase') -or
         $ScanPath.StartsWith('https:', 'InvariantCultureIgnoreCase')) {
         $TempName = [System.IO.Path]::GetTempFileName()
@@ -50,7 +54,7 @@ foreach ($ScanPath in $args) {
         [Console]::Error.WriteLine("file '$ScanPath' not found")
     } else {
         $ScanPath = (Resolve-Path $ScanPath).Path
-        $ScanOut = Scan $ScanPath
+        $ScanOut = Scan $ScanPath $DisplayName
         if ($ScanOut) {
             Write-Output $ScanOut
             $Threats++
@@ -59,7 +63,6 @@ foreach ($ScanPath in $args) {
 
     if ($TempName) {
         Remove-Item $TempName
-        $TempName = $null
     }
 }
 
