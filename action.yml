@@ -1,5 +1,8 @@
 name: avm
 description: AntiVirus Monitor
+branding:
+  color: red
+  icon: monitor
 inputs:
   files:
     description: list of files to scan (newline separated)
