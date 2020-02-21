@@ -18,7 +18,12 @@ function Write-ScanOutput {
     Write-Output $args
 }
 
-function Scan {
+function AvVersion {
+    $AvList |
+        foreach { & "AvVersion-$_" }
+}
+
+function AvScan {
     param (
         $ScanPath,
         $DisplayName
@@ -53,8 +58,12 @@ foreach ($ScanPath in $args) {
     if (-not (Test-Path $ScanPath)) {
         [Console]::Error.WriteLine("file '$ScanPath' not found")
     } else {
+        if (-not $AvVersion) {
+            $AvVersion = AvVersion
+            Write-Output "$AvVersion`n"
+        }
         $ScanPath = (Resolve-Path $ScanPath).Path
-        $ScanOut = Scan $ScanPath $DisplayName
+        $ScanOut = AvScan $ScanPath $DisplayName
         if ($ScanOut) {
             Write-Output $ScanOut
             $Threats++

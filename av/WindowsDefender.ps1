@@ -2,6 +2,11 @@
 #
 # Copyright 2020 Bill Zissimopoulos
 
+function AvVersion-WindowsDefender {
+    $ThreatDefinitionVersion = (Get-MpComputerStatus).AntispywareSignatureVersion
+    "SCANNER: WindowsDefender $ThreatDefinitionVersion"
+}
+
 function AvScan-WindowsDefender {
     param (
         $ScanPath,
@@ -17,8 +22,8 @@ function AvScan-WindowsDefender {
     $ScanOut = & $AvProg -Scan -ScanType 3 -File $ScanPath -DisableRemediation
     if ($LASTEXITCODE -ne 0) {
         $ThreatDefinitionVersion = (Get-MpComputerStatus).AntispywareSignatureVersion
-        Write-ScanOutput "SCAN: MpCmdRun.exe -Scan -ScanType 3 -File `"$DisplayName`" -DisableRemediation"
-        Write-ScanOutput "Threat Definition Version: $ThreatDefinitionVersion`n"
+        Write-ScanOutput "SCANNER: WindowsDefender $ThreatDefinitionVersion"
+        Write-ScanOutput "COMMAND: MpCmdRun.exe -Scan -ScanType 3 -File `"$DisplayName`" -DisableRemediation`n"
         Write-ScanOutput $ScanOut
     }
 }
