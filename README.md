@@ -10,8 +10,17 @@ The AntiVirus Monitor is a collection of Powershell scripts that are driven by G
 
 The main script is `avm.ps1` and uses the subcommand pattern. Subcommands can be found in the `cmd` directory and support for different AntiVirus products in the `av` directory.
 
-To add support for a new AntiVirus product `Product` a file named `Product.ps1` must be to added to the `av` directory and a function named `AvScan-Product` must exist in the file. For example, here is the `AvScan` function for Windows Defender:
+To add support for a new AntiVirus product `PRODUCT` a file named `PRODUCT.ps1` must be to added to the `av` directory and the functions named `AvVersion-PRODUCT` and `AvScan-PRODUCT` must exist in the file. For example, here are the functions for Windows Defender:
 
+**`AvVersion-PRODUCT`**:
+```powershell
+function AvVersion-WindowsDefender {
+    $ThreatDefinitionVersion = (Get-MpComputerStatus).AntispywareSignatureVersion
+    "SCANNER: WindowsDefender $ThreatDefinitionVersion"
+}
+```
+
+**`AvScan-PRODUCT`**:
 ```powershell
 function AvScan-WindowsDefender {
     param (
@@ -28,8 +37,8 @@ function AvScan-WindowsDefender {
     $ScanOut = & $AvProg -Scan -ScanType 3 -File $ScanPath -DisableRemediation
     if ($LASTEXITCODE -ne 0) {
         $ThreatDefinitionVersion = (Get-MpComputerStatus).AntispywareSignatureVersion
-        Write-ScanOutput "SCAN: MpCmdRun.exe -Scan -ScanType 3 -File `"$DisplayName`" -DisableRemediation"
-        Write-ScanOutput "Threat Definition Version: $ThreatDefinitionVersion`n"
+        Write-ScanOutput "SCANNER: WindowsDefender $ThreatDefinitionVersion"
+        Write-ScanOutput "COMMAND: MpCmdRun.exe -Scan -ScanType 3 -File `"$DisplayName`" -DisableRemediation`n"
         Write-ScanOutput $ScanOut
     }
 }
