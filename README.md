@@ -30,7 +30,7 @@ jobs:
             ...
 ```
 
-This is setup to run every 6 hours (at 00:00, 06:00, 12:00, 18:00 PST) and scan files `FILE1` and `FILE2` for viruses. If an AntiVirus product finds that one of the files is infected (e.g. because of a false positive due to a recent update of the product's signature database), then a GitHub notification is posted.
+This workflow is scheduled to run every 6 hours (at 00:00, 06:00, 12:00, 18:00 PST) and scan files `FILE1` and `FILE2` for viruses. If an AntiVirus product finds that one of the files is infected (e.g. because of a false positive due to a recent update of the product's signature database), then a GitHub notification is posted.
 
 **NOTE**: In order to have GitHub notifications posted, make sure that you have enabled GitHub Actions notifications under your account's [Settings > Notifications > GitHub Actions](https://github.com/settings/notifications).
 
