@@ -11,7 +11,7 @@ The AntiVirus Monitor is a GitHub action that can scan binaries on a schedule an
 To add this capability to your repository add a file named `.github/workflows/avm.yml` with the following contents:
 
 **`.github/workflows/avm.yml`**:
-```
+```yaml
 name: avm
 
 on:
