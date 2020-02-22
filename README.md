@@ -78,7 +78,7 @@ Project structure:
 - [`av`](av): AntiVirus product support can be found here.
 - [`action`](action): GitHub Action support files can be found here.
 
-To add support for a new AntiVirus product `PRODUCT` a file named `PRODUCT.ps1` must be to added to the `av` directory and the functions named `AvVersion-PRODUCT` and `AvScan-PRODUCT` must exist in the file. For example, here are the functions for Windows Defender:
+To add support for a new AntiVirus product `PRODUCT` a file named `PRODUCT.ps1` must be added to the `av` directory and the functions named `AvVersion-PRODUCT` and `AvScan-PRODUCT` must exist in the file. For example, here are the functions for Windows Defender:
 
 **`AvVersion-PRODUCT`**:
 ```powershell
